@@ -11,7 +11,6 @@ export const store = new Vuex.Store({
   },
   mutations: {
     checkbox (state, index) {
-      console.log('fffff')
       state.todos[index].completed = !state.todos[index].completed
     },
     DELETE_TODO (state, index) {
@@ -25,6 +24,13 @@ export const store = new Vuex.Store({
     },
     CHANGE_VISIBILITY (state, newVisibilityValue) {
       state.visibility = newVisibilityValue
+    },
+    CLEAR (state) {
+      for (let i = state.todos.length - 1; i >= 0; i--) {
+        if (state.todos[i].completed === true) {
+          state.todos.splice(i, 1)
+        }
+      }
     }
   },
   actions: {
@@ -33,6 +39,9 @@ export const store = new Vuex.Store({
     },
     addTodo ({commit}, title) {
       commit('ADD_TODO', title)
+    },
+    CLEAR_TODO ({state, commit}) {
+      commit('CLEAR')
     },
     changeVisibility ({commit}, newVisibilityValue) {
       commit('CHANGE_VISIBILITY', newVisibilityValue)
